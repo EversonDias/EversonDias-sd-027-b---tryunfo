@@ -8,6 +8,8 @@ class App extends React.Component {
     super();
 
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.resetState = this.resetState.bind(this);
 
     this.state = {
       cardName: '',
@@ -18,8 +20,47 @@ class App extends React.Component {
       cardImage: '',
       cardRare: '',
       cardTrunfo: '',
+      listCard: [],
       isSaveButtonDisabled: true,
     };
+  }
+
+  handleSave() {
+    const {
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardName,
+      cardDescription,
+      cardImage,
+    } = this.state;
+
+    const card = {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+    };
+
+    this.setState(({ listCard }) => ({
+      listCard: [...listCard, card],
+    }));
+
+    this.resetState();
+  }
+
+  handleOnChange({ target: { value, name, checked } }) {
+    if (name === 'checkTrunfo') {
+      this.setState({
+        cardTrunfo: checked,
+      }, this.validation);
+    } else {
+      this.setState({
+        [name]: value,
+      }, this.validation);
+    }
   }
 
   validation() {
@@ -30,7 +71,6 @@ class App extends React.Component {
       cardName,
       cardDescription,
       cardImage,
-      cardRare,
     } = this.state;
     const name = cardName.length > 0;
     const description = cardDescription.length > 0;
@@ -57,16 +97,18 @@ class App extends React.Component {
     }
   }
 
-  handleOnChange({ target: { value, name, checked } }) {
-    if (name === 'checkTrunfo') {
-      this.setState({
-        cardTrunfo: checked,
-      }, this.validation);
-    } else {
-      this.setState({
-        [name]: value,
-      }, this.validation);
-    }
+  resetState() {
+    this.setState({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '',
+      cardAttr2: '',
+      cardAttr3: '',
+      cardImage: '',
+      cardRare: '',
+      cardTrunfo: '',
+      isSaveButtonDisabled: true,
+    });
   }
 
   render() {
@@ -77,7 +119,7 @@ class App extends React.Component {
           <Form
             { ...this.state }
             onInputChange={ this.handleOnChange }
-            isChecked={ this.handleChecked }
+            saveButton={ this.handleSave }
           />
           <Card { ...this.state } />
         </div>

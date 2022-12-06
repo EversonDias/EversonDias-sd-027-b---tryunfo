@@ -16,7 +16,7 @@ class Form extends React.Component {
       hasTrunfo,
       isSaveButtonDisabled,
       onInputChange,
-      onSaveButtonClick,
+      saveButton,
     } = this.props;
 
     return (
@@ -29,7 +29,6 @@ class Form extends React.Component {
             data-testid="name-input"
             value={ cardName }
             onChange={ onInputChange }
-            required
           />
         </label>
 
@@ -41,7 +40,6 @@ class Form extends React.Component {
             data-testid="description-input"
             value={ cardDescription }
             onChange={ onInputChange }
-            required
           />
         </label>
 
@@ -86,7 +84,6 @@ class Form extends React.Component {
             data-testid="image-input"
             value={ cardImage }
             onChange={ onInputChange }
-            required
           />
         </label>
 
@@ -96,7 +93,6 @@ class Form extends React.Component {
           data-testid="rare-input"
           value={ cardRare }
           onChange={ onInputChange }
-          required
         >
           <option value="normal">Normal</option>
           <option value="raro">Raro</option>
@@ -118,7 +114,7 @@ class Form extends React.Component {
           type="button"
           data-testid="save-button"
           disabled={ isSaveButtonDisabled }
-          onClick={ onSaveButtonClick }
+          onClick={ saveButton }
         >
           Salvar
         </button>
