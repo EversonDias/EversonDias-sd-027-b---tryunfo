@@ -30,15 +30,15 @@ class Card extends React.Component {
   }
 }
 
-Card.propType = {
+Card.propTypes = {
   cardName: PropsType.string.isRequired,
-  cardDescription: PropsType.string,
-  cardAttr1: PropsType.string,
-  cardAttr2: PropsType.string,
-  cardAttr3: PropsType.string,
-  cardImage: PropsType.string,
-  cardRare: PropsType.string,
-  cardTrunfo: PropsType.bool,
+  cardDescription: PropsType.string.isRequired,
+  cardAttr1: PropsType.string.isRequired,
+  cardAttr2: PropsType.string.isRequired,
+  cardAttr3: PropsType.string.isRequired,
+  cardImage: PropsType.string.isRequired,
+  cardRare: PropsType.string.isRequired,
+  cardTrunfo: PropsType.bool.isRequired,
 };
 
 export default Card;

@@ -1,4 +1,5 @@
 import React from 'react';
+import uniqid from 'uniqid';
 import Card from './components/Card';
 import Form from './components/Form';
 import Container from './styles/global';
@@ -11,8 +12,10 @@ class App extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.resetState = this.resetState.bind(this);
     this.validationSuperTrunfo = this.validationSuperTrunfo.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
     this.state = {
+      cardId: '',
       cardName: '',
       cardDescription: '',
       cardAttr1: '',
@@ -39,6 +42,7 @@ class App extends React.Component {
     } = this.state;
 
     const card = {
+      cardId: uniqid(),
       cardName,
       cardDescription,
       cardAttr1,
@@ -69,18 +73,27 @@ class App extends React.Component {
     }
   }
 
-  validationSuperTrunfo() {
+  handleDelete({ target: { id } }) {
     const { listCard } = this.state;
-    const card = listCard.map(({ cardTrunfo }) => cardTrunfo === true);
-    if (card.includes(true)) {
-      this.setState({
-        hasTrunfo: true,
-      });
-    } else {
-      this.setState({
-        hasTrunfo: false,
-      });
-    }
+    const newList = listCard.filter((data) => data.cardId !== id);
+    this.setState({
+      listCard: [...newList],
+    }, this.validationSuperTrunfo);
+  }
+
+  resetState() {
+    this.setState({
+      cardName: '',
+      cardId: '',
+      cardDescription: '',
+      cardAttr1: '',
+      cardAttr2: '',
+      cardAttr3: '',
+      cardImage: '',
+      cardRare: '',
+      cardTrunfo: '',
+      isSaveButtonDisabled: true,
+    });
   }
 
   validation() {
@@ -117,18 +130,18 @@ class App extends React.Component {
     }
   }
 
-  resetState() {
-    this.setState({
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
-      cardImage: '',
-      cardRare: '',
-      cardTrunfo: '',
-      isSaveButtonDisabled: true,
-    });
+  validationSuperTrunfo() {
+    const { listCard } = this.state;
+    const card = listCard.map(({ cardTrunfo }) => cardTrunfo === true);
+    if (card.includes(true)) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    } else {
+      this.setState({
+        hasTrunfo: false,
+      });
+    }
   }
 
   render() {
@@ -145,7 +158,19 @@ class App extends React.Component {
           <Card { ...this.state } />
         </div>
         <div>
-          {listCard.map((data) => <Card key={ data.cardName } { ...data } />)}
+          {listCard.map((data) => (
+            <div key={ data.cardId }>
+              <Card { ...data } />
+              <button
+                type="button"
+                id={ data.cardId }
+                data-testid="delete-button"
+                onClick={ this.handleDelete }
+              >
+                Excluir
+              </button>
+            </div>
+          ))}
         </div>
       </Container>
     );
