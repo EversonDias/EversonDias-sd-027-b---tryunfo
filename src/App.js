@@ -153,7 +153,7 @@ class App extends React.Component {
           <Form
             { ...this.state }
             onInputChange={ this.handleOnChange }
-            saveButton={ this.handleSave }
+            onSaveButtonClick={ this.handleSave }
           />
           <Card { ...this.state } />
         </div>
