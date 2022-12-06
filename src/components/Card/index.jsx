@@ -18,20 +18,20 @@ class Card extends React.Component {
     return (
       <Container>
         <p data-testid="name-card">{cardName}</p>
-        <img data-testid="name-card" src={cardImage} alt={cardName} />
+        <img data-testid="name-card" src={ cardImage } alt={ cardName } />
         <p data-testid="name-card">{cardDescription}</p>
         <p data-testid="attr1-card">{cardAttr1}</p>
         <p data-testid="attr2-card">{cardAttr2}</p>
         <p data-testid="attr3-card">{cardAttr3}</p>
         <p data-testid="rare-card">{cardRare}</p>
-        <p data-testid="trunfo-card" disabled={cardTrunfo}></p>
+        {cardTrunfo ? <p data-testid="trunfo-card">Super Trunfo</p> : ''}
       </Container>
-    )
+    );
   }
 }
 
 Card.propType = {
-  cardName: PropsType.string,
+  cardName: PropsType.string.isRequired,
   cardDescription: PropsType.string,
   cardAttr1: PropsType.string,
   cardAttr2: PropsType.string,
@@ -39,6 +39,6 @@ Card.propType = {
   cardImage: PropsType.string,
   cardRare: PropsType.string,
   cardTrunfo: PropsType.bool,
-}
+};
 
 export default Card;
