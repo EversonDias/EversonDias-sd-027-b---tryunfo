@@ -10,6 +10,7 @@ class App extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.resetState = this.resetState.bind(this);
+    this.validationSuperTrunfo = this.validationSuperTrunfo.bind(this);
 
     this.state = {
       cardName: '',
@@ -20,6 +21,7 @@ class App extends React.Component {
       cardImage: '',
       cardRare: '',
       cardTrunfo: '',
+      hasTrunfo: '',
       listCard: [],
       isSaveButtonDisabled: true,
     };
@@ -33,6 +35,7 @@ class App extends React.Component {
       cardName,
       cardDescription,
       cardImage,
+      cardTrunfo,
     } = this.state;
 
     const card = {
@@ -42,11 +45,14 @@ class App extends React.Component {
       cardAttr2,
       cardAttr3,
       cardImage,
+      cardTrunfo,
     };
 
     this.setState(({ listCard }) => ({
       listCard: [...listCard, card],
-    }));
+    }), () => {
+      this.validationSuperTrunfo();
+    });
 
     this.resetState();
   }
@@ -60,6 +66,20 @@ class App extends React.Component {
       this.setState({
         [name]: value,
       }, this.validation);
+    }
+  }
+
+  validationSuperTrunfo() {
+    const { listCard } = this.state;
+    const card = listCard.map(({ cardTrunfo }) => cardTrunfo === true);
+    if (card.includes(true)) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    } else {
+      this.setState({
+        hasTrunfo: false,
+      });
     }
   }
 
@@ -112,6 +132,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { listCard } = this.state;
     return (
       <Container>
         <h1 className="title">Tryunfo</h1>
@@ -122,6 +143,9 @@ class App extends React.Component {
             saveButton={ this.handleSave }
           />
           <Card { ...this.state } />
+        </div>
+        <div>
+          {listCard.map((data) => <Card key={ data.cardName } { ...data } />)}
         </div>
       </Container>
     );
