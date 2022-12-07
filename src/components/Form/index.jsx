@@ -132,7 +132,7 @@ Form.propTypes = {
   cardAttr2: PropsTypes.string.isRequired,
   cardAttr3: PropsTypes.string.isRequired,
   cardImage: PropsTypes.string.isRequired,
-  cardRare: PropsTypes.string,
+  cardRare: PropsTypes.string.isRequired,
   cardTrunfo: PropsTypes.bool.isRequired,
   hasTrunfo: PropsTypes.bool.isRequired,
   isSaveButtonDisabled: PropsTypes.bool.isRequired,

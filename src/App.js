@@ -111,13 +111,15 @@ class App extends React.Component {
     const attr1 = Number(cardAttr1);
     const attr2 = Number(cardAttr2);
     const attr3 = Number(cardAttr3);
-    const maxAttr1 = attr1 <= 90;
+    const max = 90;
+    const maxAttr1 = attr1 <= max;
     const minAttr1 = attr1 >= 0;
-    const maxAttr2 = attr2 <= 90;
+    const maxAttr2 = attr2 <= max;
     const minAttr2 = attr2 >= 0;
-    const maxAttr3 = attr3 <= 90;
+    const maxAttr3 = attr3 <= max;
     const minAttr3 = attr3 >= 0;
-    const maxValue = attr1 + attr2 + attr3 <= 210;
+    const value = 210;
+    const maxValue = attr1 + attr2 + attr3 <= value;
     const validation = name 
     && description 
     && image
