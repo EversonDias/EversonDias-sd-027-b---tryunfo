@@ -39,6 +39,7 @@ class App extends React.Component {
       cardDescription,
       cardImage,
       cardTrunfo,
+      cardRare,
     } = this.state;
 
     const card = {
@@ -50,6 +51,7 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardTrunfo,
+      cardRare,
     };
 
     this.setState(({ listCard }) => ({
@@ -120,8 +122,8 @@ class App extends React.Component {
     const minAttr3 = attr3 >= 0;
     const value = 210;
     const maxValue = attr1 + attr2 + attr3 <= value;
-    const validation = name 
-    && description 
+    const validation = name
+    && description
     && image
     && maxAttr1
     && minAttr1
