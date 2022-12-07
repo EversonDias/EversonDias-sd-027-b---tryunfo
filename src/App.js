@@ -23,8 +23,8 @@ class App extends React.Component {
       cardAttr3: '',
       cardImage: '',
       cardRare: '',
-      cardTrunfo: '',
-      hasTrunfo: '',
+      cardTrunfo: false,
+      hasTrunfo: false,
       listCard: [],
       isSaveButtonDisabled: true,
     };
@@ -91,7 +91,7 @@ class App extends React.Component {
       cardAttr3: '',
       cardImage: '',
       cardRare: '',
-      cardTrunfo: '',
+      cardTrunfo: false,
       isSaveButtonDisabled: true,
     });
   }
@@ -107,19 +107,28 @@ class App extends React.Component {
     } = this.state;
     const name = cardName.length > 0;
     const description = cardDescription.length > 0;
-    const testImage = /\.(jpe?g||png||gif||bmp)$/i;
-    const image = testImage.test(cardImage);
+    const image = cardImage.length > 0;
     const attr1 = Number(cardAttr1);
     const attr2 = Number(cardAttr2);
     const attr3 = Number(cardAttr3);
-    const maxValuerAllAttr = 210;
-    const maxValuerAttr = 90;
-    const maxValuer = attr1 + attr2 + attr3 <= maxValuerAllAttr;
-    const maxAttr = attr1 <= maxValuerAttr
-      && attr2 <= maxValuerAttr
-      && attr3 <= maxValuerAttr;
-    const minAttr = attr1 > 0 && attr2 > 0 && attr3 > 0;
-    if (maxValuer && maxAttr && minAttr && name && description && image) {
+    const maxAttr1 = attr1 <= 90;
+    const minAttr1 = attr1 >= 0;
+    const maxAttr2 = attr2 <= 90;
+    const minAttr2 = attr2 >= 0;
+    const maxAttr3 = attr3 <= 90;
+    const minAttr3 = attr3 >= 0;
+    const maxValue = attr1 + attr2 + attr3 <= 210;
+    const validation = name 
+    && description 
+    && image
+    && maxAttr1
+    && minAttr1
+    && maxAttr2
+    && minAttr2
+    && maxAttr3
+    && minAttr3
+    && maxValue;
+    if (validation) {
       this.setState({
         isSaveButtonDisabled: false,
       });
