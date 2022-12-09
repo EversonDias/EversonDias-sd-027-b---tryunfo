@@ -13,6 +13,7 @@ class App extends React.Component {
     this.resetState = this.resetState.bind(this);
     this.validationSuperTrunfo = this.validationSuperTrunfo.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
 
     this.state = {
       cardId: '',
@@ -26,6 +27,7 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       listCard: [],
+      listBackup: [],
       isSaveButtonDisabled: true,
     };
   }
@@ -56,6 +58,7 @@ class App extends React.Component {
 
     this.setState(({ listCard }) => ({
       listCard: [...listCard, card],
+      listBackup: [...listCard, card],
     }), () => {
       this.validationSuperTrunfo();
     });
@@ -81,6 +84,19 @@ class App extends React.Component {
     this.setState({
       listCard: [...newList],
     }, this.validationSuperTrunfo);
+  }
+
+  handleSearch({ target: { value } }) {
+    const { listBackup, listCard } = this.state;
+    this.setState({
+      listCard: [...listBackup],
+    });
+    if (value !== '') {
+      const newList = listCard.filter(({ cardName }) => cardName.includes(value));
+      this.setState({
+        listCard: [...newList],
+      });
+    }
   }
 
   resetState() {
@@ -169,6 +185,14 @@ class App extends React.Component {
             onSaveButtonClick={ this.handleSave }
           />
           <Card { ...this.state } />
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Digite o nome da carta"
+            data-testid="name-filter"
+            onChange={ this.handleSearch }
+          />
         </div>
         <div>
           {listCard.map((data) => (
