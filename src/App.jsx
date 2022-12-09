@@ -23,7 +23,7 @@ class App extends React.Component {
       cardAttr2: '',
       cardAttr3: '',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
       hasTrunfo: false,
       listCard: [],
@@ -67,6 +67,7 @@ class App extends React.Component {
   }
 
   handleOnChange({ target: { value, name, checked } }) {
+    console.log(value);
     if (name === 'checkTrunfo') {
       this.setState({
         cardTrunfo: checked,
@@ -83,16 +84,25 @@ class App extends React.Component {
     const newList = listCard.filter((data) => data.cardId !== id);
     this.setState({
       listCard: [...newList],
+      listBackup: [...newList],
     }, this.validationSuperTrunfo);
   }
 
-  handleSearch({ target: { value } }) {
+  handleSearch({ target: { value } }, type) {
     const { listBackup, listCard } = this.state;
     this.setState({
       listCard: [...listBackup],
     });
-    if (value !== '') {
-      const newList = listCard.filter(({ cardName }) => cardName.includes(value));
+    console.log(listBackup);
+    // console.log(listCard);
+    if (value !== '' && value !== 'todas') {
+      console.log('ops');
+      let newList;
+      if (type === 'cardRare') {
+        newList = listCard.filter(({ cardRare }) => cardRare === value);
+      } else {
+        newList = listCard.filter(({ cardName }) => cardName.includes(value));
+      }
       this.setState({
         listCard: [...newList],
       });
@@ -191,8 +201,17 @@ class App extends React.Component {
             type="text"
             placeholder="Digite o nome da carta"
             data-testid="name-filter"
-            onChange={ this.handleSearch }
+            onChange={ (event) => this.handleSearch(event, 'cardName') }
           />
+          <select
+            data-testid="rare-filter"
+            onChange={ (event) => this.handleSearch(event, 'cardRare') }
+          >
+            <option value="todas">Todos</option>
+            <option value="normal">Normal</option>
+            <option value="raro">Raro</option>
+            <option value="muito raro">muito raro</option>
+          </select>
         </div>
         <div>
           {listCard.map((data) => (
