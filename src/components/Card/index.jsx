@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-max-depth */
 import React from 'react';
 import PropsType from 'prop-types';
+import { AiFillStar } from 'react-icons/ai';
 import Container from './style';
 
 class Card extends React.Component {
@@ -14,17 +16,44 @@ class Card extends React.Component {
       cardRare,
       cardTrunfo,
     } = this.props;
+    const star = 11;
 
     return (
       <Container>
-        <p data-testid="name-card">{cardName}</p>
-        <img data-testid="image-card" src={ cardImage } alt={ cardName } />
-        <p data-testid="description-card">{cardDescription}</p>
-        <p data-testid="attr1-card">{cardAttr1}</p>
-        <p data-testid="attr2-card">{cardAttr2}</p>
-        <p data-testid="attr3-card">{cardAttr3}</p>
-        <p data-testid="rare-card">{cardRare}</p>
-        {cardTrunfo ? <p data-testid="trunfo-card">Super Trunfo</p> : ''}
+        <div className="containerMain">
+          <div className={ `container  ${cardRare.split(' ')[0]}` }>
+            {cardTrunfo ? (
+              <p data-testid="trunfo-card" className="superTrunfo">
+                {
+                  [...new Array(star)].map((_item, index) => <AiFillStar key={ index } />)
+                }
+              </p>
+            ) : ''}
+            <p data-testid="name-card" className="nameCard">{cardName}</p>
+            <div className="containerImg">
+              <img data-testid="image-card" src={ cardImage } alt={ cardName } />
+            </div>
+            <div>
+              <p data-testid="description-card" className="nameCard">{cardDescription}</p>
+              <div className="containerAttr">
+                <p data-testid="attr1-card">
+                  <span>Inteligencia</span>
+                  {cardAttr1}
+                </p>
+                <p data-testid="attr2-card">
+                  {' '}
+                  <span>Força</span>
+                  {cardAttr2}
+                </p>
+                <p data-testid="attr3-card">
+                  {' '}
+                  <span>Sorte</span>
+                  {cardAttr3}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
     );
   }

@@ -67,7 +67,6 @@ class App extends React.Component {
   }
 
   handleOnChange({ target: { value, name, checked } }) {
-    console.log(value);
     if (name === 'checkTrunfo') {
       this.setState({
         cardTrunfo: checked,
@@ -89,24 +88,21 @@ class App extends React.Component {
   }
 
   handleSearch({ target: { value } }, type) {
-    const { listBackup, listCard } = this.state;
-    this.setState({
-      listCard: [...listBackup],
-    });
-    console.log(listBackup);
-    // console.log(listCard);
-    if (value !== '' && value !== 'todas') {
-      console.log('ops');
-      let newList;
-      if (type === 'cardRare') {
-        newList = listCard.filter(({ cardRare }) => cardRare === value);
+    const { listBackup } = this.state;
+    let newList = listBackup;
+    if (value.trim() !== '') {
+      if (type === 'cardName') {
+        newList = newList.filter((data) => data[type].includes(value));
       } else {
-        newList = listCard.filter(({ cardName }) => cardName.includes(value));
+        newList = value !== 'Todos'
+          ? newList.filter((data) => data[type].toLowerCase() === value.toLowerCase())
+          : [...listBackup];
+        console.log(newList);
       }
-      this.setState({
-        listCard: [...newList],
-      });
     }
+    this.setState({
+      listCard: newList,
+    });
   }
 
   resetState() {
@@ -126,9 +122,6 @@ class App extends React.Component {
 
   validation() {
     const {
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
       cardName,
       cardDescription,
       cardImage,
@@ -136,28 +129,9 @@ class App extends React.Component {
     const name = cardName.length > 0;
     const description = cardDescription.length > 0;
     const image = cardImage.length > 0;
-    const attr1 = Number(cardAttr1);
-    const attr2 = Number(cardAttr2);
-    const attr3 = Number(cardAttr3);
-    const max = 90;
-    const maxAttr1 = attr1 <= max;
-    const minAttr1 = attr1 >= 0;
-    const maxAttr2 = attr2 <= max;
-    const minAttr2 = attr2 >= 0;
-    const maxAttr3 = attr3 <= max;
-    const minAttr3 = attr3 >= 0;
-    const value = 210;
-    const maxValue = attr1 + attr2 + attr3 <= value;
     const validation = name
     && description
-    && image
-    && maxAttr1
-    && minAttr1
-    && maxAttr2
-    && minAttr2
-    && maxAttr3
-    && minAttr3
-    && maxValue;
+    && image;
     if (validation) {
       this.setState({
         isSaveButtonDisabled: false,
@@ -187,8 +161,11 @@ class App extends React.Component {
     const { listCard } = this.state;
     return (
       <Container>
-        <h1 className="title">Tryunfo</h1>
-        <div className="container">
+        <header>
+          <h1 className="title">Tryunfo</h1>
+        </header>
+
+        <div className="containerForm">
           <Form
             { ...this.state }
             onInputChange={ this.handleOnChange }
@@ -196,7 +173,8 @@ class App extends React.Component {
           />
           <Card { ...this.state } />
         </div>
-        <div>
+
+        <div className="containerFilter">
           <input
             type="text"
             placeholder="Digite o nome da carta"
@@ -207,15 +185,16 @@ class App extends React.Component {
             data-testid="rare-filter"
             onChange={ (event) => this.handleSearch(event, 'cardRare') }
           >
-            <option value="todas">Todos</option>
-            <option value="normal">Normal</option>
-            <option value="raro">Raro</option>
-            <option value="muito raro">muito raro</option>
+            <option value="Todos">Todos</option>
+            <option value="Normal">Normal</option>
+            <option value="Raro">Raro</option>
+            <option value="Muito Raro">Muito Raro</option>
           </select>
         </div>
-        <div>
+
+        <div className="containerListCard">
           {listCard.map((data) => (
-            <div key={ data.cardId }>
+            <div key={ data.cardId } className="miniCard">
               <Card { ...data } />
               <button
                 type="button"

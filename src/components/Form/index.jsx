@@ -21,8 +21,8 @@ class Form extends React.Component {
 
     return (
       <Container>
-        <label htmlFor="cardName">
-          Nome
+        <label htmlFor="cardName" className="itemForm">
+          <p>Nome</p>
           <input
             type="text"
             name="cardName"
@@ -32,8 +32,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label htmlFor="cardDescription">
-          Descrição
+        <label htmlFor="cardDescription" className="itemForm">
+          <p>Descrição</p>
           <input
             type="textarea"
             name="cardDescription"
@@ -43,8 +43,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label htmlFor="cardAttr1">
-          Attr1
+        <label htmlFor="cardAttr1" className="itemForm">
+          <p>Inteligencia</p>
           <input
             type="number"
             name="cardAttr1"
@@ -54,8 +54,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label htmlFor="cardAttr2">
-          Attr2
+        <label htmlFor="cardAttr2" className="itemForm">
+          <p>Força</p>
           <input
             type="number"
             name="cardAttr2"
@@ -65,8 +65,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label htmlFor="cardAttr3">
-          Attr3
+        <label htmlFor="cardAttr3" className="itemForm">
+          <p>Sorte</p>
           <input
             type="number"
             name="cardAttr3"
@@ -76,8 +76,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label htmlFor="cardImage">
-          Imagem
+        <label htmlFor="cardImage" className="itemForm">
+          <p>Imagem</p>
           <input
             type="text"
             name="cardImage"
@@ -87,30 +87,31 @@ class Form extends React.Component {
           />
         </label>
 
-        <select
-          name="cardRare"
-          id=""
-          data-testid="rare-input"
-          value={ cardRare }
-          onChange={ onInputChange }
-        >
-          <option value="normal">Normal</option>
-          <option value="raro">Raro</option>
-          <option value="muito raro">Muito Raro</option>
-        </select>
-
-        <label htmlFor="checkTrunfo">
-          {
-            hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p> : <input
-              type="checkbox"
-              name="checkTrunfo"
-              value="checkboxTrunfo"
-              data-testid="trunfo-input"
-              checked={ cardTrunfo }
-              onChange={ onInputChange }
-            />
-          }
-        </label>
+        <div className="containerSelect">
+          <select
+            name="cardRare"
+            id=""
+            data-testid="rare-input"
+            value={ cardRare }
+            onChange={ onInputChange }
+          >
+            <option value="Normal">Normal</option>
+            <option value="Raro">Raro</option>
+            <option value="Muito Raro">Muito Raro</option>
+          </select>
+          <div htmlFor="checkTrunfo">
+            {
+              hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p> : <input
+                type="checkbox"
+                name="checkTrunfo"
+                value="checkboxTrunfo"
+                data-testid="trunfo-input"
+                checked={ cardTrunfo }
+                onChange={ onInputChange }
+              />
+            }
+          </div>
+        </div>
 
         <button
           type="button"
