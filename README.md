@@ -45,7 +45,7 @@ Para acessar e executar este projeto, siga os passos abaixo:
 2. Clone o Projeto
 
 ```bash
-git clone https://github.com/EversonDias/Project_Trybe_React.js_JavaScript_and_Styled_Components_Tryunfo.git Tryunfo
+git clone https://github.com/EversonDias/Tryunfo_with_React.js_JavaScript_and_Styled_Components.git Tryunfo
 ```
 
 3. Entre no projeto
